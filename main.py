@@ -12,7 +12,6 @@ app = Flask(__name__, static_url_path='', static_folder='frontend/my-app/build')
 api = Api(app)
 CORS(app)
 
-
 root = make_from_file('./dictionary.txt')
 
 @app.route("/")
