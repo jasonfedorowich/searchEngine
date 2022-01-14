@@ -28,6 +28,13 @@ class Search(Resource):
         resp = {'result': words}
         return resp, 201
 
+    def get(self):
+        query = request.args.get('query')
+        words = root.search(query)
+        resp = {'result': words}
+        return resp, 201
+
+
 
 
 
