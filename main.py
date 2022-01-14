@@ -8,7 +8,7 @@ from flask_restful import Resource
 from flask import request
 
 
-app = Flask(__name__, static_url_path='', static_folder='frontend/my-app/build')
+app = Flask(__name__, static_url_path='', static_folder='frontend/se/build')
 api = Api(app)
 CORS(app)
 
@@ -33,7 +33,6 @@ class Search(Resource):
         words = root.search(query)
         resp = {'result': words}
         return resp, 201
-
 
 
 
