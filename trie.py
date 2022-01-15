@@ -54,10 +54,13 @@ class Trie:
 
 def make_from_file(file):
     root = Trie()
-    words = open(file).read().splitlines()
+    file = open(file)
+    words = file.read().splitlines()
     for word in words:
         root.insert(word)
-
+    del words
+    file.close()
+    del file
 
     return root
 
