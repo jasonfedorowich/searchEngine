@@ -13,7 +13,7 @@ api = Api(app)
 CORS(app)
 
 prefix_root = make_from_file('./dictionary.txt')
-suffix_root = make_from_file('./dictionary.txt', True)
+#suffix_root = make_from_file('./dictionary.txt', True)
 
 @app.route("/")
 def start():
@@ -36,24 +36,24 @@ class SearchPrefix(Resource):
         return resp, 201
 
 
-class SearchSuffix(Resource):
-
-    def post(self):
-        jsn = request.get_json()
-        query = jsn['query']
-        words = suffix_root.search(query[::-1])
-        resp = {'result': words}
-        return resp, 201
-
-    def get(self):
-        query = request.args.get('query')
-        words = suffix_root.search(query[::-1])
-        resp = {'result': words}
-        return resp, 201
+# class SearchSuffix(Resource):
+#
+#     def post(self):
+#         jsn = request.get_json()
+#         query = jsn['query']
+#         words = suffix_root.search(query[::-1])
+#         resp = {'result': words}
+#         return resp, 201
+#
+#     def get(self):
+#         query = request.args.get('query')
+#         words = suffix_root.search(query[::-1])
+#         resp = {'result': words}
+#         return resp, 201
 
 
 api.add_resource(SearchPrefix, '/api/search-prefix')
-api.add_resource(SearchSuffix, '/api/search-suffix')
+# api.add_resource(SearchSuffix, '/api/search-suffix')
 
 
 if __name__ == "__main__":
