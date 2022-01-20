@@ -5,10 +5,13 @@ class Trie:
         self.end_of_word = False
         self.word = ''
 
-    def insert(self, str, i=0):
+    def insert(self, str, i=0, reverse=False):
         if len(str) == i:
+            if reverse:
+                self.word = str[::-1]
+            else:
+                self.word = str
             self.end_of_word = True
-            self.word = str
             return
         c = ord(str[i]) - ord('a')
         if self.children[c] is None:
@@ -17,7 +20,7 @@ class Trie:
         else:
             trie = self.children[c]
 
-        trie.insert(str, i+1)
+        trie.insert(str, i+1, reverse)
 
     def search(self, str, i=0):
         if len(str) == i:
@@ -52,12 +55,15 @@ class Trie:
         return words
 
 
-def make_from_file(file):
+def make_from_file(file, reverse=False):
     root = Trie()
     file = open(file)
     words = file.read().splitlines()
     for word in words:
-        root.insert(word)
+        if reverse:
+            root.insert(word[::-1], i=0, reverse=reverse)
+        else:
+            root.insert(word, reverse)
     del words
     file.close()
     del file

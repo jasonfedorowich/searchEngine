@@ -70,7 +70,7 @@ class DashBoard extends React.Component{
 
     
          
-          axios.post(host + '/search', jsonStr, {
+          axios.post(host + '/api/search-prefix', jsonStr, {
             headers: {
               'Content-Type': 'application/json'
             }

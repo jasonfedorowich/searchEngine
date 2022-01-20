@@ -12,32 +12,48 @@ app = Flask(__name__, static_url_path='', static_folder='frontend/se/build')
 api = Api(app)
 CORS(app)
 
-root = make_from_file('./dictionary.txt')
+prefix_root = make_from_file('./dictionary.txt')
+suffix_root = make_from_file('./dictionary.txt', True)
 
 @app.route("/")
 def start():
     return send_from_directory(app.static_folder, 'index.html')
 
 
-class Search(Resource):
+class SearchPrefix(Resource):
 
     def post(self):
         jsn = request.get_json()
         query = jsn['query']
-        words = root.search(query)
+        words = prefix_root.search(query)
         resp = {'result': words}
         return resp, 201
 
     def get(self):
         query = request.args.get('query')
-        words = root.search(query)
+        words = prefix_root.search(query)
         resp = {'result': words}
         return resp, 201
 
 
+class SearchSuffix(Resource):
+
+    def post(self):
+        jsn = request.get_json()
+        query = jsn['query']
+        words = suffix_root.search(query[::-1])
+        resp = {'result': words}
+        return resp, 201
+
+    def get(self):
+        query = request.args.get('query')
+        words = suffix_root.search(query[::-1])
+        resp = {'result': words}
+        return resp, 201
 
 
-api.add_resource(Search, '/search')
+api.add_resource(SearchPrefix, '/api/search-prefix')
+api.add_resource(SearchSuffix, '/api/search-suffix')
 
 
 if __name__ == "__main__":
